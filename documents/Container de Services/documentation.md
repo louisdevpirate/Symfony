@@ -2,6 +2,13 @@ Le Container de Services est le coeur névralgique de Symfony ! Suivez cette sec
 
 📖 En savoir plus sur le container de services de Symfony : https://symfony.com/doc/current/service_container.html
 
+## CONTAINER DE SERVICES
+
+**Le container de services fait partie de la librairie symfony/dependency-injection**
+
+Si on prend l'exemple de notre classe HelloController, on a injecté dans son constructeur une **autre classe** LoggerInterface pour pouvoir la faire vivre, car sans cette dépendance elle ne pourrait pas fonctionner. C'est ce qu'on appelle de l'injection de dépendances, et c'est le <u>container de services</u> qui s'en charge. C'est lui qui s'occupe pour chaque classe d'aller chercher la dépendance dont elle a besoin, et peut-être que cette dépendance a elle-même besoin d'une dépendance, et ainsi de suite...Tout ça c'est le container de services qui s'en occupe. **Il gère les classes et les dépendances.** Mais du coup lorsqu'on fait un *symfony console debug:autowiring*, on peut voir que le container de services connaît déjà pleins de classes par défaut. Qui a injecté ces classes ? 
+Et bien c'est ce qu'on appelle les **Bundles** de SYmfony. Quand on utilise Symfony, on utilise un coeur, sur lequel on vient greffer des bundles, qui vont eux-mêmes injecter des services dans le container de services. 
+De plus, ce qu'il y a de super, c'est que le container de services est lui-même configuré de telle façon que lorsqu'on crée notre propre service, il sait le reconnaître grâce au dossier *src*. Ce que cela veut donc dire, c'est que lorsqu'on crée un service, une classe dans le dossier src, le container de services peut y avoir accès, et lorsqu'on appelle ce service dans une autre classe, dans un autre fichier, le container de services va être en mesure de nous la construire et de l'injecter. 
 
 
 ## IMPORTANT :
@@ -20,3 +27,7 @@ Le Container de Services est le coeur névralgique de Symfony ! Suivez cette sec
 
 Si vous voulez ensuite importer ce service dans un autre fichier, une autre classe, il suffit de faire un use App\NomDuDossier\NomDeLaFonction, puis de l'utiliser en paramètre d'une fonction __construct
 -> Voir tout ceci dans l'exemple du commit "création du service Calculator" lié à ce fichier 
+
+
+
+

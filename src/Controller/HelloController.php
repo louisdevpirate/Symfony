@@ -26,6 +26,8 @@ class HelloController extends AbstractController
     {
         return $this->render('hello.html.twig', [
             'name' => $name,
+            'formateur1' => ['prenom' => 'Lior', 'nom' => 'Chamla'],
+            'formateur2' => ['prenom' => 'Jérôme', 'nom' => 'Dupont'],
         ]);
     }
 }

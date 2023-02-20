@@ -26,11 +26,6 @@ class HelloController extends AbstractController
     {
         return $this->render('hello.html.twig', [
             'name' => $name,
-            'formateur' => [
-                'prenom' => 'Lior',
-                'nom' => 'Chamla',
-                'age' => 33
-            ]
         ]);
     }
 }

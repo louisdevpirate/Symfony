@@ -34,7 +34,12 @@ Si vous voulez ensuite importer ce service dans un autre fichier, une autre clas
 Si d'aventure on venait à télécharger une librairie (sur un site comme packagist.org par exemple), cette librairie s'installerait dans le dossier *vendor*. Or, comme expliqué précédemment, le container de services ne reconnait que les classes rangées dans le dossier *src*. On pourrait alors créer une nouvelle instance directement dans la classe en utilisant "new Slugify" (par exemple), mais comme on l'a vu, créer une classe peut parfois nécessiter plusieurs injections de dépendances au préalable ce qui peut s'avérer laborieux dans certains cas.
 Pour palier à ce problème et pouvoir placer la classe/dépendance directement dans le container de services, on peut se rendre dans le fichier *services.yaml* et rendre notre classe visible au container de services grâce à une simple tilde "~". 
 Dans notre cas, avec le Slugify, cela donnerait cette ligne : Cocur\Slugify\Slugify : ~ (A placer encore une fois en bas du fichier *services.yaml*).
-Le fichier services.yaml sert donc à faire connaître au container de services les classes qu'il ne peut pas connaître tout seul. Une fois qu'il connait la classe, nous n'avons plus qu'à lui demander de nous la "livrer" en entrant (Slugify $slugify) dans ce dernier (attention à ne pas oublier le use).
+Le fichier *services.yaml* sert donc à faire connaître au container de services les classes qu'il ne peut pas connaître tout seul. Une fois qu'il connait la classe, nous n'avons plus qu'à lui demander de nous la "livrer" en entrant (Slugify $slugify) dans ce dernier (attention à ne pas oublier le use).
+
+## DIFFERENCE BUNDLE ET BIBLIOTHEQUE
+
+La différence principale entre une bibliothèque tierce et un bundle réside dans le fait que si pour la librairie, nous avions besoin de déclarer le fichier *services.yaml* pour la rendre visible par le container de services, dans le cas du buindle (qui est un genre de librairie également), la déclaration se fait toute seule. Lorsqu'on installe un bundle, comme twig dans notre exemple, le fichier *bundles.php* va se mettre automatiquement à jour, et ça tombe bien car ce fichier fait partie de ceux que le container de services va sonder afin de connaître les classes à utiliser. Pas besoin de le déclarer dans *services.yaml* donc. 
+**Autre chose importante**, il faut garder à l'esprit qu'un bundle est plus poussé qu'une librairie, le bundle lui, vient se greffer directement au coeur du framework, lui permettant ainsi de pouvoir ajouter davantage de librairies, et donc de dépendances, d'outils en somme. Ce qui veut donc dire que plus on a de bundles, plus on peut require des librairies, plus on peut rendre notre framework exponentiel et complet. 
 
 
 

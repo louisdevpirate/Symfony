@@ -30,6 +30,8 @@ class TestController extends AbstractController
     #[Route('test/{age?0}', name: 'test')]
     public function test(Request $request, $age)
     {
+        dd($request);
+        
         return new Response('Vous avez ' .  $age . ' ans !');
     }
 }

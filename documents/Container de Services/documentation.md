@@ -29,5 +29,12 @@ Si vous voulez ensuite importer ce service dans un autre fichier, une autre clas
 -> Voir tout ceci dans l'exemple du commit "création du service Calculator" lié à ce fichier 
 
 
+## INJECTION MANUELLE
+
+Si d'aventure on venait à télécharger une librairie (sur un site comme packagist.org par exemple), cette librairie s'installerait dans le dossier *vendor*. Or, comme expliqué précédemment, le container de services ne reconnait que les classes rangées dans le dossier *src*. On pourrait alors créer une nouvelle instance directement dans la classe en utilisant "new Slugify" (par exemple), mais comme on l'a vu, créer une classe peut parfois nécessiter plusieurs injections de dépendances au préalable ce qui peut s'avérer laborieux dans certains cas.
+Pour palier à ce problème et pouvoir placer la classe/dépendance directement dans le container de services, on peut se rendre dans le fichier *services.yaml* et rendre notre classe visible au container de services grâce à une simple tilde "~". 
+Dans notre cas, avec le Slugify, cela donnerait cette ligne : Cocur\Slugify\Slugify : ~ (A placer encore une fois en bas du fichier *services.yaml*).
+Le fichier services.yaml sert donc à faire connaître au container de services les classes qu'il ne peut pas connaître tout seul. Une fois qu'il connait la classe, nous n'avons plus qu'à lui demander de nous la "livrer" en entrant (Slugify $slugify) dans ce dernier (attention à ne pas oublier le use).
+
 
 

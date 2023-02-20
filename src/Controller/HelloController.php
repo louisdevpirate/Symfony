@@ -2,8 +2,9 @@
 
 namespace App\Controller;
 
-use Psr\Log\LoggerInterface;
 use App\Taxes\Calculator;
+use Cocur\Slugify\Slugify;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,9 +20,11 @@ class HelloController extends AbstractController
     }
 
     #[Route('hello/{name?World}', name: 'hello')]
-    public function hello($name, LoggerInterface $logger)
+    public function hello($name, LoggerInterface $logger, Slugify $slugify)
     {
         $logger->error('Mon message de log !');
+
+        var_dump($slugify->slugify('Hello World'));
 
         $tva = $this->calculator->calcul(100);
 

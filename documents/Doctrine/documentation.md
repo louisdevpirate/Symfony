@@ -24,3 +24,14 @@ Les Repository permettent de sélectionner des enregistrements, des données, da
 
 Le Manager permet de suivre les entités et leurs modifications pour les refléter dans la base de données. Si on veut créer, modifier, lire ou supprimer des enregistrements de la base de données depuis notre code, il faudra obligatoirement passer par le Manager. 
 
+
+## Fonctions non-exhaustives
+
+- <ul>$productRepository->find(2)</ul> : Trouve dans la base de données le Product qui a l'id n°2
+
+- <ul>$productRepository->findAll()</ul> : Trouve tous les éléments de la table Product
+
+- <ul>$productRepository->findBy(['name' => 'exemple', 'price' => 'exemple'])</ul> : Trouve certains éléments en fonction d'un ou plusieurs critère(s) précis, possibilité de les afficher grâce à un ORDER (décroissant, croissant etc..)
+
+- <ul>$productRepository->findOneBy([ 'price' => 10])</ul> : Permet de trouver un seul enregistrement de la base de données en fonction de critères. *Si plusieurs enregistrements ont la même donnée, par exemple si 30 produits ont un 'price' de 10, alors un seul sera affiché, le premier que la BDD aura trouvé, sous-entendu le premier qui tombera chronologiquement dans le tableau.*
+

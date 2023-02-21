@@ -4,6 +4,9 @@
 
 📖 Documentation officielle du Doctrine Migrations Bundle : https://symfony.com/doc/3.1/bundles/DoctrineMigrationsBundle/index.html
 
+📖 Documentation officielle du Doctrine Fixtures Bundle : https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
+
+
 # LE BUT
 
 Le but d'utiliser Doctrine c'est qu'au lieu de faire les manipulations de données directement dans la base de données, nous ayons juste à passer par le code. On pourrait très bien se sevrir du code pour faire des requêtes SQL à la BDD, mais dans notre cas nous allons utiliser un langage qui s'appelle le DQL, et qui permet de manipuler la BDD en servant des **Entités**. 
@@ -53,3 +56,7 @@ Le Manager permet de suivre les entités et leurs modifications pour les reflét
 
 - **symfony console doctrine:make:migrations** : Permet de mettre en place les modifications de façon concrête en donnant le feu vert à doctrine. 
 
+
+## LES FIXTURES 
+
+Il existe un bundle dans Symfony qui permet de remplir une BDD en deux temps trois mouvements en injectant tout un tas de fausses données, ce bundle se nomme **Fixture**. Grâce à ce dernier on va pouvoir rendre une BDD plus vivante et plus réaliste, pour les tests par exemple, sans avoir besoin au préalable de la remplir manuellement.

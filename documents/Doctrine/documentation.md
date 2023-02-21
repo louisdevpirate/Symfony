@@ -10,6 +10,7 @@
 
 📖 En savoir plus sur le composant String de Symfony :  https://symfony.com/doc/current/components/string.html
 
+📖 Documentation du package Faker : https://github.com/fzaninotto/Faker
 
 
 

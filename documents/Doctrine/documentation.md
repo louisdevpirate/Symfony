@@ -6,6 +6,9 @@
 
 📖 Documentation officielle du Doctrine Fixtures Bundle : https://symfony.com/doc/current/bundles/DoctrineFixturesBundle/index.html
 
+📖 Documentation du package Faker : https://github.com/fzaninotto/Faker
+
+
 
 # LE BUT
 
@@ -60,3 +63,4 @@ Le Manager permet de suivre les entités et leurs modifications pour les reflét
 ## LES FIXTURES 
 
 Il existe un bundle dans Symfony qui permet de remplir une BDD en deux temps trois mouvements en injectant tout un tas de fausses données, ce bundle se nomme **Fixture**. Grâce à ce dernier on va pouvoir rendre une BDD plus vivante et plus réaliste, pour les tests par exemple, sans avoir besoin au préalable de la remplir manuellement.
+Pour rajouter encore plus de réalisme aux données insérées, il existe une librairie qui s'appelle <ul>**Faker**</ul> et qui dispose de fonctions permettants de créer des fausses données pouvant être utilisées pour compléter la BDD.

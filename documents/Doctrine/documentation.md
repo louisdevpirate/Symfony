@@ -8,6 +8,9 @@
 
 📖 Documentation du package Faker : https://github.com/fzaninotto/Faker
 
+📖 En savoir plus sur le composant String de Symfony :  https://symfony.com/doc/current/components/string.html
+
+
 
 
 # LE BUT
@@ -64,3 +67,8 @@ Le Manager permet de suivre les entités et leurs modifications pour les reflét
 
 Il existe un bundle dans Symfony qui permet de remplir une BDD en deux temps trois mouvements en injectant tout un tas de fausses données, ce bundle se nomme **Fixture**. Grâce à ce dernier on va pouvoir rendre une BDD plus vivante et plus réaliste, pour les tests par exemple, sans avoir besoin au préalable de la remplir manuellement.
 Pour rajouter encore plus de réalisme aux données insérées, il existe une librairie qui s'appelle <ul>**Faker**</ul> et qui dispose de fonctions permettants de créer des fausses données pouvant être utilisées pour compléter la BDD.
+
+
+## LE COMPOSANT STRING
+
+Le composant String de Symfony est un composant qui permet de faire toute sorte de filtrage sur des string, notamment des **slugs**.     

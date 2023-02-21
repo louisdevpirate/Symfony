@@ -2,6 +2,8 @@
 
 📖 Documentation officielle de Symfony à propos de Doctrine : https://symfony.com/doc/current/doctrine.html 
 
+📖 Documentation officielle du Doctrine Migrations Bundle : https://symfony.com/doc/3.1/bundles/DoctrineMigrationsBundle/index.html
+
 # LE BUT
 
 Le but d'utiliser Doctrine c'est qu'au lieu de faire les manipulations de données directement dans la base de données, nous ayons juste à passer par le code. On pourrait très bien se sevrir du code pour faire des requêtes SQL à la BDD, mais dans notre cas nous allons utiliser un langage qui s'appelle le DQL, et qui permet de manipuler la BDD en servant des **Entités**. 

@@ -6,10 +6,14 @@ use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\FormFactoryInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Form\FormFactoryInterface;
 
 class ProductController extends AbstractController
 {
@@ -51,10 +55,33 @@ class ProductController extends AbstractController
     {
         $builder = $factory->createBuilder();
 
-        $builder->add('name')
-            ->add('shortDescription')
-            ->add('price')
-            ->add('category');
+        $builder->add('name', TextType::class, [
+            'label' => 'Nom du produit',
+            'attr' => ['class' => 'form-control', 'placeholder' => 'Tapez le nom du produit']
+        ])
+            ->add('shortDescription', TextareaType::class, [
+                'label' => 'Description courte',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Tapez une description assez courte mais parlante pour le visiteur']
+            ])
+            ->add('price', MoneyType::class, [
+                'label' => 'Prix du produit',
+                'attr' => [
+                    'class' => 'form-control',
+                    'placeholder' => 'Tapez le prix du produit en euros'
+                ]
+            ])
+            ->add('category', ChoiceType::class, [
+                'label' => 'Catégorie', 
+                'attr' => [
+                    'class' => 'form-control'],
+                    'placeholder' => '-- Choisir une catégorie --',
+                    'choices' => [
+                        'Catégorie 1' => 1,
+                        'Catégorie 2' => 2
+                    ]
+            ]);
 
         $form = $builder->getForm();
 

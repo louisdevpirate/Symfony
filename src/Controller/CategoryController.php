@@ -24,7 +24,6 @@ class CategoryController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted()){
-            $category = $form->getData();
             $category->setSlug(strtolower($slugger->slug($category->getName())));
 
             $em->persist($category);
@@ -42,12 +41,25 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/admin/category/{id}/edit', name:'category_edit')]
-    public function edit($id, CategoryRepository $categoryRepository){
+    public function edit($id, CategoryRepository $categoryRepository, EntityManagerInterface $em, FormFactoryInterface $factory, Request $request){
 
         $category = $categoryRepository->find($id);
 
+        $form = $this->createForm(CategoryType::class, $category);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted()){
+            $em->flush();
+
+            return $this->redirectToRoute('homepage');
+        }
+
+        $formView = $form->createView();
+
         return $this->render('category/edit.html.twig', [
             'category' => $category,
+            'formView' => $formView,
         ]);
     }
 };

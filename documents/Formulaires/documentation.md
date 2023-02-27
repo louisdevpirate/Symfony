@@ -31,3 +31,15 @@ Exigences :
 La route /admin/category/create doit afficher le formulaire
 On doit aussi gérer la soumission du formulaire avec enregistrement de la nouvelle catégorie dans la base de données !
 On doit enfin rediriger le visiteur vers la page d'accueil
+
+# Exercice 3
+
+créez le formulaire de modification d'une catégorie
+
+En réutilisant le formulaire CategoryType, on veut pouvoir modifier la catégorie dont l'id est envoyé dans l' URL
+
+Exigences :
+
+La route /admin/category/{id}/create doit afficher le formulaire pré-rempli avec les données de la catégorie
+On doit aussi gérer la soumission du formulaire avec enregistrement des modifications dans la base de données !
+On doit enfin rediriger le visiteur vers la page d'accueil

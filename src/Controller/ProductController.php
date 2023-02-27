@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Form\FormFactoryInterface;
 
 class ProductController extends AbstractController
 {
@@ -46,8 +47,21 @@ class ProductController extends AbstractController
     }
 
     #[Route('/admin/product/create', name:'product_create')]
-    public function create()
+    public function create(FormFactoryInterface $factory)
     {
-        return $this->render('product/create.html.twig');
+        $builder = $factory->createBuilder();
+
+        $builder->add('name')
+            ->add('shortDescription')
+            ->add('price')
+            ->add('category');
+
+        $form = $builder->getForm();
+
+        $formView = $form->createView();
+
+        return $this->render('product/create.html.twig', [
+            'formView' => $formView,
+        ]);
     }
 }

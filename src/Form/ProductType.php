@@ -7,6 +7,7 @@ use App\Entity\Category;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -49,30 +50,25 @@ class ProductType extends AbstractType
                 'placeholder' => '-- Choisir une catégorie --',
                 'class' => Category::class,
                 'choice_label' => 'name'
-                ])
+            ]);
 
-            ->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event){
-                $product = $event->getData();
-                
-                if($product->getPrice() !== null){
-                    $product->setPrice($product->getPrice() * 100);
-                }
-            })
-            
-            ->addEventListener(FormEvents::PRE_SET_DATA, function(FormEvent $event){
-                $form = $event->getForm();
+        $builder->get('price')->addModelTransformer(new CallbackTransformer(
 
-                $product = $event->getData();
-
-                if($product->getPrice() !== null){
-
-                    $product->setPrice($product->getPrice() / 100);
-
+            function($value){
+                if($value === null){
+                    return;
                 }
 
-                
+                return $value / 100;
+            },
+            function ($value) {
+                if($value === null){
+                    return;
+                }
 
-            });
+                return $value * 100;
+            }
+        ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void

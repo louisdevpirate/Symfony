@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Product;
 use App\Entity\Category;
+use App\Form\Type\PriceType;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\AbstractType;
@@ -34,7 +35,7 @@ class ProductType extends AbstractType
                     'placeholder' => 'Tapez une description assez courte mais parlante pour le visiteur']
             ])
 
-            ->add('price', MoneyType::class, [
+            ->add('price', PriceType::class, [
                 'label' => 'Prix du produit',
                 'attr' => [
                     'placeholder' => 'Tapez le prix du produit en euros'

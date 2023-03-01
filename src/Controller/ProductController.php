@@ -3,26 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Product;
-use App\Entity\Category;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use PHPUnit\Framework\Constraint\GreaterThan;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\Form\Extension\Core\Type\UrlType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\MoneyType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ProductController extends AbstractController
 {
@@ -33,7 +25,7 @@ class ProductController extends AbstractController
             'slug' => $slug,
         ]);
 
-        if (!$category){
+        if (!$category) {
             throw $this->createNotFoundException("La catégorie demandée n'existe pas");
         }
 
@@ -44,13 +36,13 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{category_slug}/{slug}', name: 'product_show')]
-    public function show($slug, ProductRepository $productRepository, UrlGeneratorInterface $urlGenerator): Response
+    public function show($slug, ProductRepository $productRepository): Response
     {
         $product = $productRepository->findOneBy([
             'slug' => $slug,
         ]);
 
-        if(!$product){
+        if (!$product) {
             throw $this->createNotFoundException("Le produit demandé n'existe pas !");
         }
 
@@ -60,16 +52,35 @@ class ProductController extends AbstractController
     }
 
     #[Route('/admin/product/{id}/edit', name: 'product_edit')]
-    public function edit($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $em)
+    public function edit($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $em, ValidatorInterface $validator)
     {
+        $age = 80;
+
+        $result = $validator->validate($age, [
+            new \Symfony\Component\Validator\Constraints\LessThanOrEqual([
+                'value' => 90,
+                'message' => "L'âge doit être inférieur à {{ compared_value }} mais vous avez donné {{ value }}"
+            ]),
+            new \Symfony\Component\Validator\Constraints\GreaterThan([
+                'value' => 0,
+                'message' => 'L\'âge doit être supérieur à 0'
+            ])
+        ]);
+
+        if ($result->count() > 0) {
+            dd("Il y a des erreurs ", $result);
+        }
+
+        dd("Tout va bien");
+
         $product = $productRepository->find($id);
 
         $form = $this->createForm(ProductType::class, $product);
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted()){
-            
+        if ($form->isSubmitted()) {
+
             $em->flush();
 
             return $this->redirectToRoute('product_show', [
@@ -87,8 +98,8 @@ class ProductController extends AbstractController
     }
 
 
-    #[Route('/admin/product/create', name:'product_create')]
-    public function create(FormFactoryInterface $factory, Request $request, SluggerInterface $slugger, EntityManagerInterface $em)
+    #[Route('/admin/product/create', name: 'product_create')]
+    public function create(Request $request, SluggerInterface $slugger, EntityManagerInterface $em)
     {
         $product = new Product;
 
@@ -96,10 +107,10 @@ class ProductController extends AbstractController
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted()){
+        if ($form->isSubmitted()) {
             $product = $form->getData();
             $product->setSlug(strtolower($slugger->slug($product->getName())));
-            
+
             $em->persist($product);
 
             $em->flush();
@@ -110,7 +121,7 @@ class ProductController extends AbstractController
             ]);
         }
 
-        
+
 
         $formView = $form->createView();
 

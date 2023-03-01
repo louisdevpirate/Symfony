@@ -12,6 +12,9 @@
 
 📖 Documentation officielle de Symfony sur les DataTransformers : https://symfony.com/doc/current/form/data_transformers.html
 
+📖 Documentation officielle de Symfony - Créer ses propres types de champs : https://symfony.com/doc/current/form/create_custom_field_type.html
+
+
 
 
 # LES FORMULAIRES PARTIE 1 
@@ -78,6 +81,7 @@ Durant ce cycle de vie le formulaire comporte plusieurs événements, on appelle
 
 - ### POST_SUBMIT :
     Le formulaire a intégré les données soumises (sous la forme d'un tableau ou d'un objet)
+
 
 
 

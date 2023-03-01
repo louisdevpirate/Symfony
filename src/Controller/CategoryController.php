@@ -16,7 +16,6 @@ class CategoryController extends AbstractController
     #[Route('/admin/category/create', name: 'category_create')]
     public function create(Request $request, EntityManagerInterface $em, SluggerInterface $slugger)
     {
-
         $category = new Category;
 
         $form = $this->createForm(CategoryType::class, $category);
@@ -59,8 +58,8 @@ class CategoryController extends AbstractController
         $formView = $form->createView();
 
         return $this->render('category/edit.html.twig', [
-            'category' => $category,
             'formView' => $formView,
+            'category' => $category,
         ]);
     }
 };

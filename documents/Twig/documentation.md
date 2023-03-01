@@ -6,6 +6,12 @@
 
 📖 En savoir plus sur l'inclusion de templates avec Twig : https://twig.symfony.com/doc/3.x/templates.html#including-other-templates
 
+📖 Documentation officielle de Symfony : appeler un controller directement depuis Twig (déprécié) : https://symfony.com/doc/4.1/templating/embedding_controllers.html
+
+🤔 Baptiste Donaux : Twig render controller, le faux bon ami : https://www.baptiste-donaux.fr/twig-render-controller-le-faux-bon-ami/
+
+📖 Documentation officielle de Symfony - Injecter des globales dans Twig : https://symfony.com/doc/current/templating/global_variables.html
+
 
 ## UrlGeneratorInterface 
 

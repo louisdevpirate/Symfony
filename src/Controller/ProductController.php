@@ -15,6 +15,9 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Validator\Constraints\Collection;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ProductController extends AbstractController
 {
@@ -54,18 +57,10 @@ class ProductController extends AbstractController
     #[Route('/admin/product/{id}/edit', name: 'product_edit')]
     public function edit($id, ProductRepository $productRepository, Request $request, EntityManagerInterface $em, ValidatorInterface $validator)
     {
-        $age = 80;
+        $product = new Product;
+        $product->setName('');
 
-        $result = $validator->validate($age, [
-            new \Symfony\Component\Validator\Constraints\LessThanOrEqual([
-                'value' => 90,
-                'message' => "L'âge doit être inférieur à {{ compared_value }} mais vous avez donné {{ value }}"
-            ]),
-            new \Symfony\Component\Validator\Constraints\GreaterThan([
-                'value' => 0,
-                'message' => 'L\'âge doit être supérieur à 0'
-            ])
-        ]);
+        $result = $validator->validate($product);
 
         if ($result->count() > 0) {
             dd("Il y a des erreurs ", $result);

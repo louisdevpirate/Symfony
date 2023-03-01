@@ -15,7 +15,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class CategoryController extends AbstractController
 {
     #[Route('/admin/category/create', name: 'category_create')]
-    public function create(FormFactoryInterface $factory, Request $request, CategoryRepository $categoryRepository, EntityManagerInterface $em, SluggerInterface $slugger){
+    public function create(FormFactoryInterface $factory, Request $request, CategoryRepository $categoryRepository, EntityManagerInterface $em, SluggerInterface $slugger)
+    {
 
         $category = new Category;
 
@@ -23,7 +24,7 @@ class CategoryController extends AbstractController
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted()){
+        if ($form->isSubmitted()) {
             $category->setSlug(strtolower($slugger->slug($category->getName())));
 
             $em->persist($category);
@@ -40,8 +41,9 @@ class CategoryController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/category/{id}/edit', name:'category_edit')]
-    public function edit($id, CategoryRepository $categoryRepository, EntityManagerInterface $em, FormFactoryInterface $factory, Request $request){
+    #[Route('/admin/category/{id}/edit', name: 'category_edit')]
+    public function edit($id, CategoryRepository $categoryRepository, EntityManagerInterface $em, Request $request)
+    {
 
         $category = $categoryRepository->find($id);
 
@@ -49,7 +51,7 @@ class CategoryController extends AbstractController
 
         $form->handleRequest($request);
 
-        if($form->isSubmitted()){
+        if ($form->isSubmitted()) {
             $em->flush();
 
             return $this->redirectToRoute('homepage');

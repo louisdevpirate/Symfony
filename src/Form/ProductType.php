@@ -25,14 +25,14 @@ class ProductType extends AbstractType
                     'placeholder' => 'Tapez le nom du produit'
                 ],
                 'required' => false,
-                'constraints' => new NotBlank(['message' => 'Validation du formulaire: Le nom du produit ne peut pas être vide'])
             ])
 
             ->add('shortDescription', TextareaType::class, [
                 'label' => 'Description courte',
                 'attr' => [
                     'placeholder' => 'Tapez une description assez courte mais parlante pour le visiteur'
-                ]
+                ],
+                'required' => false,
             ])
 
             ->add('price', MoneyType::class, [
@@ -42,12 +42,12 @@ class ProductType extends AbstractType
                 ],
                 'divisor' => 100,
                 'required' => false,
-                'constraints' => new NotBlank(['message' => 'Le prix du produit est obligatoire'])
             ])
 
             ->add('mainPicture', UrlType::class, [
                 'label' => 'Image du produit',
-                'attr' => ['placeholder' => 'Tapez une URL d\'image']
+                'attr' => ['placeholder' => 'Tapez une URL d\'image'],
+                'required' => false,
             ])
 
             ->add('category', EntityType::class, [

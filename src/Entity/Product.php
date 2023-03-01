@@ -35,9 +35,13 @@ class Product
     private ?Category $category = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\Url(message: "La photo principale doit être une URL valide")]
+    #[Assert\NotBlank(message: "La photo principale est obligatoire")]
     private ?string $mainPicture = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: "La description courte est obligatoire !")]
+    #[Assert\Length(min: 20, minMessage: "La description courte doit faire minimum 20 caractères")]
     private ?string $shortDescription = null;
 
     public function getId(): ?int
@@ -103,7 +107,7 @@ class Product
         return $this->mainPicture;
     }
 
-    public function setMainPicture(string $mainPicture): self
+    public function setMainPicture(?string $mainPicture): self
     {
         $this->mainPicture = $mainPicture;
 
@@ -115,7 +119,7 @@ class Product
         return $this->shortDescription;
     }
 
-    public function setShortDescription(string $shortDescription): self
+    public function setShortDescription(?string $shortDescription): self
     {
         $this->shortDescription = $shortDescription;
 

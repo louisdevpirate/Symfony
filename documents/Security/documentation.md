@@ -1,5 +1,7 @@
 📖 Documentation officielle sur le composant Security : https://symfony.com/doc/current/security.html 
 
+📖 Documentation officielle sur la priorité des routes : https://symfony.com/doc/current/routing.html#priority-parameter
+
 
 ### En terme de sécurité il y a deux questions principales à se poser :
 

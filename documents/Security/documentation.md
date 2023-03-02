@@ -21,3 +21,14 @@ Ils permettent de gérer les **Autorisations** (as-tu le droit de faire ce que t
 ### ROLE_USER
 Il représnete le rôle que tous les utilisateurs possèdent
 
+### Authenticators
+Les authenticators de Symfony sont des objets qui permettent de vérifier l'identité d'un utilisateur dans une application web. En d'autres termes, ils permettent de s'assurer que l'utilisateur est bien celui qu'il prétend être.
+
+Les authenticators de Symfony sont utilisés pour différents types d'authentification, tels que l'authentification basée sur les jetons (tokens), l'authentification par formulaire, l'authentification par certificat, etc.
+
+Lorsqu'un utilisateur tente de se connecter à une application web, l'authenticator vérifie les informations d'identification de l'utilisateur (par exemple, son nom d'utilisateur et son mot de passe) et, si elles sont correctes, autorise l'accès à l'application. Si les informations d'identification sont incorrectes, l'utilisateur est redirigé vers une page d'erreur ou une page de connexion.
+
+Les authenticators de Symfony sont configurables et peuvent être personnalisés pour répondre aux besoins spécifiques de votre application. Par exemple, vous pouvez ajouter des fonctionnalités telles que la validation en deux étapes, la gestion des rôles et des autorisations d'accès, etc.
+
+Les authenticators seront appelés à chaque requête HTTP par Symfony pour éventuellement procéder à une authentification
+

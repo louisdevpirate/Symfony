@@ -32,3 +32,5 @@ Les authenticators de Symfony sont configurables et peuvent être personnalisés
 
 Les authenticators seront appelés à chaque requête HTTP par Symfony pour éventuellement procéder à une authentification
 
+### symfony console debug:router
+C'est une commande qui permet de voir toutes les routes existantes et comment elles fonctionnent

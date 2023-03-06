@@ -36,3 +36,16 @@ Les authenticators seront appelés à chaque requête HTTP par Symfony pour éve
 
 ### symfony console debug:router
 C'est une commande qui permet de voir toutes les routes existantes et comment elles fonctionnent
+
+
+# POUR RESUMER 
+
+A chaque fois que Symfony a recevoir une requête, il va demander à tous les authenticators du firewall concerné si ils veulent intervenir à ce moment là. Notre authenticator quan tà lui veut intervenir suelement - et c'est la méthode *supports* qui le dit - si on a rempli le formulaire de la route SecurityLogin et qu'on l'a envoyé en POST. Dans ce cas là seulement il interviendra. C'est comme si la requête allait voir un douanier et qu'elle lui disait "authentifiez moi". A ce moment là, toutes les méthodes de l'authenticator vont être appelées les unes après les autres. 
+
+=> 1) **getCredentials extrait les données d'identification à partir de la Request** : En premier lieu l'authenticator va extraire à partir de la Request (un gros sac d'information complexe) simplement les informations dont on a besoin pour la connexion, comme si on ouvrait sa valise devant le douanier pour aller chercher son passeport, perdu au milieu de pleins d'autres affaires. 
+
+=> 2) **getUser() tente d'aller chercher l'utilsiateur correspondant** : Une fois les informations nécessaires récupérées, l'authenticator va chercher dans la base de données l'utilisateur relié à ces identifiants. Donc grâce aux **credentials** et grâce au **userProvider**, il va être capable d'aller chercher si il existe quelqu'un qui possède ce mail. Si c'est le cas, pas de soucis on passe à la suite, sinon, on lance une <u>**exception d'authentification**</u> (*AuthenticationException*), qui amènera immédiatement à la fin du processus, puisque la personne n'est pas authentifiée.
+
+=> 3) **checkCredentials() permet de confirmer les informations** : Si on a bien trouvé la personne qu'on cherchait, alors on passe maintenant à l'étape finale, on va donner ce fameux utilisateur à la fonction checkCredentials() qui va se charger de vérifier si le mot de passe est le bon. Si c'est le cas, l'authentification est réussie. Sinon, on sera redirigé vers le *Failure*. 
+
+**GROSSO MODO** : L'authenticator est un tunnel de douane dans lequel sont mis en place un certain nombre de barrages. Si on passe tous les barrages, alor son est authentifiés, sinon, si il y a le moindre barrage qui n'est pas passé, alors on est pas authentifié. Tout simplement. Derrière, on peut utiliser la classe *AuthenticationUtils* pour aller extraire l'erreur qui a causé l'échec de l'authentification. On peut donc stocker l'erreur en question dans les attributs de la requête et l'envoyer à l'*AuthenticationUtils*. 

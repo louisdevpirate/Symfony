@@ -2,6 +2,8 @@
 
 📖 Documentation officielle sur la priorité des routes : https://symfony.com/doc/current/routing.html#priority-parameter
 
+📖 En savoir plus sur les annotations de sécurité comme @IsGranted : https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
+
 
 ### En terme de sécurité il y a deux questions principales à se poser :
 

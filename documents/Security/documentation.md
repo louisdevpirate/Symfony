@@ -35,7 +35,14 @@ Les authenticators de Symfony sont configurables et peuvent être personnalisés
 Les authenticators seront appelés à chaque requête HTTP par Symfony pour éventuellement procéder à une authentification
 
 ### symfony console debug:router
-C'est une commande qui permet de voir toutes les routes existantes et comment elles fonctionnent
+C'est une commande qui permet de voir toutes les routes existantes et comment elles fonctionnent et interagissent entre elles.
+
+### symfony console debug:config nom_du_package
+Commande qui permet de voir tous les fichiers de config avec leurs configurations actuelles. Par exemple si on tape *symfony console debug:config security* on peut voir toutes les configurations actuelles du fichier *security.yaml*, même celles qui ne sont pas explicitement présentées dans le fichier. Cela permet donc de sonder le fichier plus en profondeur. 
+
+### symfony console config:dump nom_du_package
+Cette commande permet de voir les configurations **possibles**, sans tenir compte des configurations actuelles comme avec le *debug:config*. Si on reprend l'exemple précédent en tapant la commande *symfony console config:dump security* alors on peut voir <u>toutes</u> les options disponibles pour le package security, en d'autres termes, tout ce qu'on aurait pu mettre dans le fichier *security.yaml*. 
+
 
 
 # POUR RESUMER 

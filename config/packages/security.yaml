@@ -16,6 +16,8 @@ security:
             form_login: 
                 login_path: app_login
                 check_path: app_login
+                username_parameter: login[email]
+                password_parameter: login[password]
 
             remember_me:
                 secret: '%kernel.secret%' # required

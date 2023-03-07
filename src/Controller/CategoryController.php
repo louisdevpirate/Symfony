@@ -6,10 +6,13 @@ use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class CategoryController extends AbstractController
@@ -43,8 +46,21 @@ class CategoryController extends AbstractController
     #[Route('/admin/category/{id}/edit', name: 'category_edit')]
     public function edit($id, CategoryRepository $categoryRepository, EntityManagerInterface $em, Request $request)
     {
-
         $category = $categoryRepository->find($id);
+
+        if (!$category) {
+            throw new NotFoundHttpException("Cette catégorie n'existe pas");
+        }
+
+        $user  = $this->getUser();
+
+        if (!$user) {
+            return $this->redirectToRoute("security_login");
+        }
+
+        if ($user !== $category->getOwner()) {
+            throw new AccessDeniedHttpException("Vous n'êtes pas le propriétaire de cette catégorie");
+        }
 
         $form = $this->createForm(CategoryType::class, $category);
 

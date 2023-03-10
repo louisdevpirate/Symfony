@@ -2,21 +2,14 @@
 
 namespace App\Security\Voter;
 
-use App\Entity\Category;
-use App\Repository\CategoryRepository;
-use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Voter;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class CategoryVoter extends Voter
 {
     public const EDIT = 'POST_EDIT';
-    protected $categoryRepository;
-
-    public function __construct(CategoryRepository $categoryRepository)
-    {
-        $this->categoryRepository = $categoryRepository;
-    }
+    public const VIEW = 'POST_VIEW';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
@@ -32,16 +25,10 @@ class CategoryVoter extends Voter
             return false;
         }
 
-        $category = $this->categoryRepository->find($subject);
-
-        if (!$category) {
-            return false;
-        }
-
         // ... (check conditions and return true to grant permission) ...
         switch ($attribute) {
             case 'CAN_EDIT':
-                return $category->getOwner() === $user;
+                return $subject->getOwner() === $user;
         }
 
         return false;

@@ -6,6 +6,7 @@
 
 📖 Documentation officielle de Symfony sur les Voters : https://symfony.com/doc/current/security/voters.html
 
+📖 En savoir plus sur les annotations de sécurité comme @IsGranted : https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
 
 ### En terme de sécurité il y a deux questions principales à se poser :
 

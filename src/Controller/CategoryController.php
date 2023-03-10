@@ -6,12 +6,11 @@ use App\Entity\Category;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
@@ -44,8 +43,7 @@ class CategoryController extends AbstractController
     }
 
     #[Route('/admin/category/{id}/edit', name: 'category_edit')]
-    #[IsGranted('CAN_EDIT', subject: "id", message: "Vous n'êtes pas le propriétaire de cette catégorie")]
-    public function edit($id, CategoryRepository $categoryRepository, EntityManagerInterface $em, Request $request, Security $security)
+    public function edit($id, CategoryRepository $categoryRepository, EntityManagerInterface $em, Request $request)
     {
         $category = $categoryRepository->find($id);
 

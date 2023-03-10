@@ -4,6 +4,8 @@
 
 📖 En savoir plus sur les annotations de sécurité comme @IsGranted : https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/annotations/security.html
 
+📖 Documentation officielle de Symfony sur les Voters : https://symfony.com/doc/current/security/voters.html
+
 
 ### En terme de sécurité il y a deux questions principales à se poser :
 
@@ -23,7 +25,7 @@ Ils indiquent au composant Security où se trouvent les données des utilisateur
 Ils permettent de gérer les **Autorisations** (as-tu le droit de faire ce que tu veux faire ?)
 
 ### ROLE_USER
-Il représnete le rôle que tous les utilisateurs possèdent
+Il représente le rôle que tous les utilisateurs possèdent
 
 ### Authenticators
 Les authenticators de Symfony sont des objets qui permettent de vérifier l'identité d'un utilisateur dans une application web. En d'autres termes, ils permettent de s'assurer que l'utilisateur est bien celui qu'il prétend être.
@@ -35,6 +37,9 @@ Lorsqu'un utilisateur tente de se connecter à une application web, l'authentica
 Les authenticators de Symfony sont configurables et peuvent être personnalisés pour répondre aux besoins spécifiques de votre application. Par exemple, vous pouvez ajouter des fonctionnalités telles que la validation en deux étapes, la gestion des rôles et des autorisations d'accès, etc.
 
 Les authenticators seront appelés à chaque requête HTTP par Symfony pour éventuellement procéder à une authentification
+
+### Les Voters
+Les voters permettent d'encapsuler et de centraliser une logique d'accès dans une classe. Plus simplement, avant on définissait les autorisations en fonction des ROLES, mais grâce aux voters on peut entrer plus dans le détail en créant des **droits**. 
 
 ### symfony console debug:router
 C'est une commande qui permet de voir toutes les routes existantes et comment elles fonctionnent et interagissent entre elles.

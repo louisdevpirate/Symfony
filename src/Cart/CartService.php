@@ -3,9 +3,7 @@
 namespace App\Cart;
 
 use App\Repository\ProductRepository;
-use Doctrine\ORM\Mapping\Cache;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartService
 {
@@ -25,11 +23,11 @@ class CartService
         return $session->get('cart', []);
     }
 
-    protected function saveCart(): array
+    protected function saveCart(array $cart)
     {
         $session = $this->requestStack->getSession();
 
-        return $session->set('cart', []);
+        $session->set('cart', $cart);
     }
 
     public function add(int $id)
@@ -51,7 +49,7 @@ class CartService
         $cart[$id]++;
 
         // 6. Enregistrer le tableau mis à jour dans la session 
-        $this->saveCart();
+        $this->saveCart($cart);
     }
 
     public function remove(int $id)
@@ -60,7 +58,7 @@ class CartService
 
         unset($cart[$id]);
 
-        $this->saveCart();
+        $this->saveCart($cart);
     }
 
     public function decrement(int $id)
@@ -80,7 +78,7 @@ class CartService
         // Soit le produit est à plus de 1 alors il faut le décrémenter 
         $cart[$id]--;
 
-        $this->saveCart();
+        $this->saveCart($cart);
     }
 
     public function getTotal()

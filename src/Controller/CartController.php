@@ -15,7 +15,7 @@ class CartController extends AbstractController
     protected $productRepository;
     protected $cartService;
 
-    public function __constrcut(ProductRepository $productRepository, CartService $cartService)
+    public function __construct(ProductRepository $productRepository, CartService $cartService)
     {
         $this->productRepository = $productRepository;
         $this->cartService = $cartService;

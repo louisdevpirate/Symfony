@@ -3,6 +3,7 @@
 namespace App\Cart;
 
 use App\Repository\ProductRepository;
+use Doctrine\ORM\Mapping\Cache;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -49,6 +50,10 @@ class CartService
         foreach ($session->get('cart', []) as $id => $qty) {
             $product = $this->productRepository->find($id);
 
+            if (!$product) {
+                continue;
+            }
+
             $total += $product->getPrice() * $qty;
         }
 
@@ -65,10 +70,11 @@ class CartService
         foreach ($session->get('cart', []) as $id => $qty) {
             $product = $this->productRepository->find($id);
 
-            $detailedCart[] = [
-                'product' => $product,
-                'qty' => $qty
-            ];
+            if (!$product) {
+                continue;
+            }
+
+            $detailedCart[] = new CartItem($product, $qty);
         }
 
         return $detailedCart;

@@ -18,36 +18,76 @@ class CartService
         $this->productRepository = $productRepository;
     }
 
+    protected function getCart(): array
+    {
+        $session = $this->requestStack->getSession();
+
+        return $session->get('cart', []);
+    }
+
+    protected function saveCart(): array
+    {
+        $session = $this->requestStack->getSession();
+
+        return $session->set('cart', []);
+    }
+
     public function add(int $id)
     {
 
-        $session = $this->requestStack->getSession();
         // 1. Retrouver le panier dans la session (sous forme de tableau) 
         // 2. Si il n"existe pas encore, alors prendre un tableau vide
-        $cart = $session->get('cart', []);
+        $cart = $this->getCart();
 
         // [12 => 4, 29 => 3, 40 => 1]
 
         // 3. Voir si le produit ($id) existe déjà dans le tableau
         // 4. Si c'est le cas, simlplement augmenter la quantité
         // 5. Sinon, ajouter le produit avec la quantité 1
-        if (array_key_exists($id, $cart)) {
-            $cart[$id]++;
-        } else {
-            $cart[$id] = 1;
+        if (!array_key_exists($id, $cart)) {
+            $cart[$id] = 0;
         }
 
+        $cart[$id]++;
+
         // 6. Enregistrer le tableau mis à jour dans la session 
-        $session->set('cart', $cart);
+        $this->saveCart();
+    }
+
+    public function remove(int $id)
+    {
+        $cart = $this->getCart();
+
+        unset($cart[$id]);
+
+        $this->saveCart();
+    }
+
+    public function decrement(int $id)
+    {
+        $cart = $this->getCart();
+
+        if (!array_key_exists($id, $cart)) {
+            return;
+        }
+
+        // Soit le produit est à 1 alors il faut simplement le supprimer
+        if ($cart[$id] === 1) {
+            $this->remove($id);
+            return;
+        }
+
+        // Soit le produit est à plus de 1 alors il faut le décrémenter 
+        $cart[$id]--;
+
+        $this->saveCart();
     }
 
     public function getTotal()
     {
         $total = 0;
 
-        $session = $this->requestStack->getSession();
-
-        foreach ($session->get('cart', []) as $id => $qty) {
+        foreach ($this->getCart() as $id => $qty) {
             $product = $this->productRepository->find($id);
 
             if (!$product) {
@@ -62,12 +102,9 @@ class CartService
 
     public function getDetailedCartItems()
     {
-
-        $session = $this->requestStack->getSession();
-
         $detailedCart = [];
 
-        foreach ($session->get('cart', []) as $id => $qty) {
+        foreach ($this->getCart() as $id => $qty) {
             $product = $this->productRepository->find($id);
 
             if (!$product) {

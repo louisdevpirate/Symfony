@@ -36,21 +36,11 @@ class CartController extends AbstractController
     }
 
     #[Route('/cart', name: 'cart_show')]
-    public function show(SessionInterface $session, ProductRepository $productRepository)
+    public function show(CartService $cartService)
     {
-        $detailedCart = [];
-        $total = 0;
+        $detailedCart = $cartService->getDetailedCartItems();
 
-        foreach ($session->get('cart', []) as $id => $qty) {
-            $product = $productRepository->find($id);
-
-            $detailedCart[] = [
-                'product' => $product,
-                'qty' => $qty
-            ];
-
-            $total += ($product->getPrice() * $qty);
-        }
+        $total = $cartService->getTotal();
 
         return $this->render('cart/index.html.twig', [
             'items' => $detailedCart,

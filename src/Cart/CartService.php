@@ -2,17 +2,19 @@
 
 namespace App\Cart;
 
+use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class CartService
 {
+    protected $productRepository;
+
     public function __construct(
         private RequestStack $requestStack,
+        ProductRepository $productRepository
     ) {
-        // Accessing the session in the constructor is *NOT* recommended, since
-        // it might not be accessible yet or lead to unwanted side-effects
-        // $this->session = $requestStack->getSession();
+        $this->productRepository = $productRepository;
     }
 
     public function add(int $id)
@@ -36,5 +38,39 @@ class CartService
 
         // 6. Enregistrer le tableau mis à jour dans la session 
         $session->set('cart', $cart);
+    }
+
+    public function getTotal()
+    {
+        $total = 0;
+
+        $session = $this->requestStack->getSession();
+
+        foreach ($session->get('cart', []) as $id => $qty) {
+            $product = $this->productRepository->find($id);
+
+            $total += $product->getPrice() * $qty;
+        }
+
+        return $total;
+    }
+
+    public function getDetailedCartItems()
+    {
+
+        $session = $this->requestStack->getSession();
+
+        $detailedCart = [];
+
+        foreach ($session->get('cart', []) as $id => $qty) {
+            $product = $this->productRepository->find($id);
+
+            $detailedCart[] = [
+                'product' => $product,
+                'qty' => $qty
+            ];
+        }
+
+        return $detailedCart;
     }
 }

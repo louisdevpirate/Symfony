@@ -33,15 +33,15 @@
                             </a>
                         </li>
 
-                        {% if not app.user %}
+                        {% if app.user %}
+
+                            <li class="nav-item"><a href="{{ path('app_logout') }}" class="btn btn-danger">Logout</a></li>
+
+                        {% else %}
 
                             <li class="nav-item"><a href="{{ path('app_register') }}" class="nav-link">Inscription</a></li>
 
                             <li class="nav-item"><a href="{{ path('app_login') }}" class="btn btn-success">Login</a></li>
-
-                        {% else %}
-
-                            <li class="nav-item"><a href="{{ path('app_logout') }}" class="btn btn-danger">Logout</a></li>
 
                         {% endif %}
 

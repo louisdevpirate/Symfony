@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\ProductRepository;
@@ -43,6 +45,14 @@ class Product
     #[Assert\NotBlank(message: "La description courte est obligatoire !")]
     #[Assert\Length(min: 20, minMessage: "La description courte doit faire minimum 20 caractères")]
     private ?string $shortDescription = null;
+
+    #[ORM\ManyToMany(targetEntity: Purchase::class, mappedBy: 'products')]
+    private Collection $purchases;
+
+    public function __construct()
+    {
+        $this->purchases = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -122,6 +132,33 @@ class Product
     public function setShortDescription(?string $shortDescription): self
     {
         $this->shortDescription = $shortDescription;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Purchase>
+     */
+    public function getPurchases(): Collection
+    {
+        return $this->purchases;
+    }
+
+    public function addPurchase(Purchase $purchase): self
+    {
+        if (!$this->purchases->contains($purchase)) {
+            $this->purchases->add($purchase);
+            $purchase->addProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removePurchase(Purchase $purchase): self
+    {
+        if ($this->purchases->removeElement($purchase)) {
+            $purchase->removeProduct($this);
+        }
 
         return $this;
     }

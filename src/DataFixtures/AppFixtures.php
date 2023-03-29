@@ -58,6 +58,8 @@ class AppFixtures extends Fixture
             $manager->persist($user);
         }
 
+        $products = [];
+
         for ($c = 0; $c < 3; $c++) {
             $category = new Category;
             $category->setName($faker->department)
@@ -75,6 +77,8 @@ class AppFixtures extends Fixture
                     ->setShortDescription($faker->paragraph())
                     ->setMainPicture($faker->imageUrl(400, 400, true));
 
+                $products[] = $product;
+
                 $manager->persist($product);
             }
         }
@@ -90,6 +94,11 @@ class AppFixtures extends Fixture
                 ->setTotal(mt_rand(2000, 30000))
                 ->setPurchasedAt(\DateTimeImmutable::createFromMutable($faker->dateTimeBetween('-6 months')));
 
+            $selectedProducts = $faker->randomElements($products, mt_rand(3, 5));
+
+            foreach ($selectedProducts as $product) {
+                $purchase->addProduct($product);
+            }
 
             if ($faker->boolean(90)) {
                 $purchase->setStatus(Purchase::STATUS_PAID);

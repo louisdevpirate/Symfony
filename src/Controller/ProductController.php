@@ -33,7 +33,7 @@ class ProductController extends AbstractController
         ]);
     }
 
-    #[Route('/{category_slug}/{slug}', name: 'product_show', priority: -1)]
+    #[Route('/{category_slug}/{slug}', name: 'product_show', priority: -2)]
     public function show($slug, ProductRepository $productRepository): Response
     {
         $product = $productRepository->findOneBy([

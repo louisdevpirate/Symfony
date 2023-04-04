@@ -8,30 +8,20 @@ use App\Entity\PurchaseItem;
 use App\Form\CartConfirmationType;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Form\FormFactoryInterface;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class PurchaseConfirmationController extends AbstractController
 {
 
-    protected $formFactory;
-    protected $router;
-    protected $security;
     protected $cartService;
     protected $em;
 
-    public function __construct(FormFactoryInterface $formFactory, RouterInterface $router, Security $security, CartService $cartService, private RequestStack $requestStack, EntityManagerInterface $em)
+    public function __construct(CartService $cartService, private RequestStack $requestStack, EntityManagerInterface $em)
     {
-        $this->formFactory = $formFactory;
-        $this->router = $router;
-        $this->security = $security;
         $this->cartService = $cartService;
         $this->em = $em;
     }
@@ -39,11 +29,12 @@ class PurchaseConfirmationController extends AbstractController
 
 
     #[Route("/purchase/confirm", name: 'purchase_confirm')]
+    #[IsGranted('ROLE_USER', message: "Vous devez être connecté pour confirmer une commande !")]
     public function confirm(Request $request)
     {
         // 1. Nous voulons lire les données du formulaire
         // FormFactoryInterface / Request
-        $form = $this->formFactory->create(CartConfirmationType::class);
+        $form = $this->createForm(CartConfirmationType::class);
 
         $form->handleRequest($request);
 
@@ -52,21 +43,19 @@ class PurchaseConfirmationController extends AbstractController
         if (!$form->isSubmitted()) {
             // Message flash puis redirection (FlashBagInterface) 
             $this->addFlash('warning', 'Vous devez remplir le formulaire de confirmation');
-            return new RedirectResponse($this->router->generate('cart_show'));
+            return $this->redirectToRoute('cart_show');
         }
 
         // 3. Si je ne suis pas connecté : dégager (Security) 
-        $user = $this->security->getUser();
+        $user = $this->getUser();
 
-        if (!$user) {
-            throw new AccessDeniedException("Vous devez être connecté pour confirmer une commande");
-        }
         // 4. Si il n'ya pas de produits dans mon panier : dégager (CartService) 
         $cartItems = $this->cartService->getDetailedCartItems();
 
         if (count($cartItems) === 0) {
             $this->addFlash('warning', 'Vous ne pouvez pas confirmer une commande avec un panier vide');
-            return new RedirectResponse($this->router->generate('cart_show'));
+
+            return $this->redirectToRoute('cart_show');
         }
 
         // 5. Nous allons créer une Purchase 
@@ -105,6 +94,6 @@ class PurchaseConfirmationController extends AbstractController
         $this->em->flush();
 
         $this->addFlash('success', "La commande a bien été enregistrée");
-        return new RedirectResponse($this->router->generate('purchase_index'));
+        return $this->redirectToRoute('purchase_index');
     }
 }

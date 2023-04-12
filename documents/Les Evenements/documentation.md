@@ -14,3 +14,12 @@ D'un autre côté, si tu prêtes ta boîte de crayons en laissant ton ami utilis
 C'est un peu comme le passage d'un argument par référence en programmation. Lorsque tu passes un argument par référence à une fonction, tu partages la même valeur d'argument avec la fonction et toute modification apportée à la valeur de l'argument dans la fonction affectera également la valeur d'origine de l'argument en dehors de la fonction.
 
 Lorsque vous passez un argument par référence en PHP, un lien vers l'emplacement de mémoire où cette valeur est stockée est transmis à la fonction. Cela signifie que toute modification apportée à la valeur de l'argument dans la fonction affectera également la valeur d'origine de cet argument en dehors de la fonction.
+
+
+## Le Design Pattern "Mediator"
+
+Le design pattern mediator est un concept qui permet de simplifier la communication entre différents objets dans un système. Le mediator agit comme un intermédiaire entre ces objets, en leur permettant de communiquer sans qu'ils n'aient à se connaître directement.
+
+Lorsque l'on parle d'événements, le mediator peut être utilisé pour gérer la communication entre différents objets qui émettent et écoutent des événements. Au lieu que chaque objet écoute directement les événements des autres, ils envoient et reçoivent les événements via le mediator. Ainsi, chaque objet ne connaît que le mediator et pas les autres objets, ce qui facilite la maintenance et l'évolutivité du code.
+
+Par exemple, imaginons que tu aies un bouton et une boîte de dialogue dans ton application. Le bouton doit afficher la boîte de dialogue lorsqu'il est cliqué. Plutôt que d'avoir le bouton et la boîte de dialogue qui communiquent directement entre eux, on peut créer un mediator qui gère les événements entre eux. Lorsque le bouton est cliqué, il envoie un événement "ouvrir boîte de dialogue" au mediator, qui à son tour envoie l'événement à la boîte de dialogue pour l'ouvrir. Ainsi, le bouton et la boîte de dialogue ne se connaissent pas directement et leur communication est gérée de manière centralisée par le mediator.

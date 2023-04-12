@@ -27,3 +27,25 @@ Le design pattern mediator est un concept qui permet de simplifier la communicat
 Lorsque l'on parle d'événements, le mediator peut être utilisé pour gérer la communication entre différents objets qui émettent et écoutent des événements. Au lieu que chaque objet écoute directement les événements des autres, ils envoient et reçoivent les événements via le mediator. Ainsi, chaque objet ne connaît que le mediator et pas les autres objets, ce qui facilite la maintenance et l'évolutivité du code.
 
 Par exemple, imaginons que tu aies un bouton et une boîte de dialogue dans ton application. Le bouton doit afficher la boîte de dialogue lorsqu'il est cliqué. Plutôt que d'avoir le bouton et la boîte de dialogue qui communiquent directement entre eux, on peut créer un mediator qui gère les événements entre eux. Lorsque le bouton est cliqué, il envoie un événement "ouvrir boîte de dialogue" au mediator, qui à son tour envoie l'événement à la boîte de dialogue pour l'ouvrir. Ainsi, le bouton et la boîte de dialogue ne se connaissent pas directement et leur communication est gérée de manière centralisée par le mediator.
+
+
+## Listener 
+
+En programmation, un Listener (ou "écouteur" en français) est une fonction ou un morceau de code qui est attaché à un événement. Il écoute ou surveille un événement spécifique qui se produit dans le programme et réagit en conséquence.
+
+Par exemple, si tu as un bouton dans ton programme, tu peux ajouter un Listener pour écouter le clic sur ce bouton. Lorsque le bouton est cliqué, le Listener détecte l'événement de clic et exécute une action, comme afficher une boîte de dialogue ou envoyer des données au serveur.
+
+Les Listeners sont couramment utilisés dans la programmation événementielle, où les événements sont déclenchés par l'utilisateur ou le système et où les actions associées à ces événements doivent être traitées. Les Listeners peuvent être utilisés pour gérer les événements de souris et de clavier, les clics de bouton, les changements de données, les erreurs, etc.
+
+En résumé, un Listener est un morceau de code qui est attaché à un événement pour surveiller et réagir à cet événement en conséquence.
+
+
+## Subscriber 
+
+Dans le contexte des événements, un Subscriber écoute des événements émis par un éditeur et réagit en conséquence. Les Subscribers sont souvent utilisés dans les systèmes de publication/abonnement, où les éditeurs publient des événements et les Subscribers s'abonnent pour recevoir des mises à jour lorsqu'un événement est publié.
+
+Par exemple, si tu as un système de publication/abonnement dans ton programme, tu peux avoir un éditeur qui publie des événements et plusieurs Subscribers qui sont abonnés à ces événements. Lorsqu'un événement est publié, tous les Subscribers abonnés à ce type d'événement sont notifiés et peuvent réagir en conséquence.
+
+Les Subscribers peuvent être utilisés pour gérer des événements de différents types, comme les événements de souris et de clavier, les événements de données, les erreurs, etc.
+
+En résumé, un Subscriber est un élément qui s'abonne à un canal de diffusion pour recevoir des messages, comme des événements

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Product;
+use App\Event\ProductViewEvent;
 use App\Form\ProductType;
 use App\Repository\ProductRepository;
 use App\Repository\CategoryRepository;
@@ -13,6 +14,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class ProductController extends AbstractController
 {
@@ -34,7 +36,7 @@ class ProductController extends AbstractController
     }
 
     #[Route('/{category_slug}/{slug}', name: 'product_show', priority: -2)]
-    public function show($slug, ProductRepository $productRepository): Response
+    public function show($slug, ProductRepository $productRepository, EventDispatcherInterface $dispatcher): Response
     {
         $product = $productRepository->findOneBy([
             'slug' => $slug,
@@ -47,6 +49,8 @@ class ProductController extends AbstractController
         return $this->render('product/show.html.twig', [
             'product' => $product,
         ]);
+
+        $dispatcher->dispatch(new ProductViewEvent($product), 'product.view');
     }
 
     #[Route('/admin/product/{id}/edit', name: 'product_edit')]

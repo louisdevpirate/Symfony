@@ -4,6 +4,8 @@ https://learn.web-develop.me/view/courses/symfony-5-le-guide-complet-debutants-e
 
 https://symfony.com/doc/current/event_dispatcher.html#listeners-or-subscribers
 
+https://symfony.com/doc/current/components/event_dispatcher.html#introduction
+
 
 Pour jeter un oeil aux Listeners et Subscribers (voir plus bas) mis en place, taper cette commande :
 **symfony console debug:event-dispatcher** (+ kernel.request ou kernel.controller ou kernel.response, pour voir plus précisément pour chaque événement)

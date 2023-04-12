@@ -1,3 +1,7 @@
+Pour en savoir plus sur le fonctionnement des événements :
+https://learn.web-develop.me/view/courses/symfony-5-le-guide-complet-debutants-et-intermediaires/528946-symfony-et-les-evenements-1-heure-et-15-minutes/1529372-plongee-dans-le-coeur-de-symfony-le-kernel-et-les-evenements
+
+
 ## Différence entre passages par valeur et par référence 
 
 ### Par valeur :

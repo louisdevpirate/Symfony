@@ -35,3 +35,6 @@ services:
 
     App\Doctrine\Listener\ProductSlugListener:
         tags: [{name: 'doctrine.orm.event_listener', event: prePersist, entity: App\Entity\Product}]
+
+    App\Doctrine\Listener\CategoryListener:
+        tags: [{name: 'doctrine.orm.event_listener', event: prePersist, entity: App\Entity\Category}]

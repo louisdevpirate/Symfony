@@ -15,7 +15,7 @@ class ProductSlugListener
         $this->slugger = $slugger;
     }
 
-    public function prePersist(LifecycleEventArgs $event)
+    public function prePersist(Product $entity, LifecycleEventArgs $event)
     {
         $entity = $event->getObject();
 
@@ -27,7 +27,5 @@ class ProductSlugListener
             // SluggerInterface
             $entity->setSlug(strtolower($this->slugger->slug($entity->getName())));
         }
-
-        dd("Ca marche");
     }
 }

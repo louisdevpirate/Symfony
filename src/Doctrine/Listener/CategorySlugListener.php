@@ -26,6 +26,7 @@ class CategorySlugListener
         }
 
         if (empty($category->getSlug())) {
+
             // SluggerInterface
             $category->setSlug(strtolower($this->slugger->slug($category->getName())));
         }
